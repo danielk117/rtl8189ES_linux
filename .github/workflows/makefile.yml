@@ -11,23 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix: 
-        version: [4.9.300]
     steps:
-    - name: download-Kernel
-      env: 
-        VERSION: ${{matrix.version }}
+    - name: kernel
       run: |
-        KERNEL_URL=https://kernel.ubuntu.com/~kernel-ppa/mainline/
-        KERNEL_URL_DETAILS=$(wget --quiet -O - ${KERNEL_URL}v${VERSION}/ | grep -A8 "Build for amd64\|Test amd64")
-        ALL_DEB=$(echo "$KERNEL_URL_DETAILS" |  grep -m1 'all.deb' | cut -d '"' -f 2)
-        AMD64_DEB=$(echo "$KERNEL_URL_DETAILS" | grep -m1 "amd64.deb" | cut -d '"' -f 2)
-        [  -z "$ALL_DEB" ] && exit 1
-        [  -z "$AMD64_DEB" ] && exit 2
-        wget -nv ${KERNEL_URL}v${VERSION}/$AMD64_DEB
-        wget -nv ${KERNEL_URL}v${VERSION}/$ALL_DEB
+        wget -nv https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.300/armhf/linux-headers-4.9.300-0409300-generic_4.9.300-0409300.202202082136_armhf.deb
         sudo dpkg --force-all -i *.deb
         echo "KVER=$(echo $ALL_DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
     - uses: actions/checkout@v2
