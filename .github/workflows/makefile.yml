@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        version: [4.9.248, 4.4.300]
+        version: [4.9.300]
     steps:
     - name: download-Kernel
       env: 
