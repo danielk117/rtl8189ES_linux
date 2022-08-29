@@ -32,4 +32,4 @@ jobs:
         echo "KVER=$(echo $ALL_DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
     - uses: actions/checkout@v2
     - name: build
-      run: make KVER=$KVER
+      run: make KVER=$KVER CONFIG_PLATFORM_HISILICON=y
