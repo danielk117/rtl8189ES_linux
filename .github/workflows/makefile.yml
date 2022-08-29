@@ -14,9 +14,10 @@ jobs:
     steps:
     - name: kernel
       run: |
-        wget -nv https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.300/armhf/linux-headers-4.9.300-0409300-generic_4.9.300-0409300.202202082136_armhf.deb
+        DEB=https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9.300/armhf/linux-headers-4.9.300-0409300-generic_4.9.300-0409300.202202082136_armhf.deb
+        wget -nv $DEB
         sudo dpkg --force-all -i *.deb
-        echo "KVER=$(echo $ALL_DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
+        echo "KVER=$(echo $DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
     - uses: actions/checkout@v2
     - name: build
-      run: make KVER=$KVER CONFIG_PLATFORM_HISILICON=y
+      run: make -j4 ARCH=arm CROSS_COMPILE=arm-linux-gnu- KVER=$KVER
