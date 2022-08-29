@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix: 
+        version: [4.9.248, 4.4.300]
     steps:
     - name: download-Kernel
       env: 
@@ -26,7 +30,6 @@ jobs:
         wget -nv ${KERNEL_URL}v${VERSION}/$ALL_DEB
         sudo dpkg --force-all -i *.deb
         echo "KVER=$(echo $ALL_DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
-    - uses: actions/checkout@v3
-
+    - uses: actions/checkout@v2
     - name: build
       run: make KVER=$KVER CONFIG_PLATFORM_I386_PC=y
