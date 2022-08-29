@@ -18,6 +18,8 @@ jobs:
         wget -nv $DEB
         sudo dpkg --force-all -i *.deb
         echo "KVER=$(echo $DEB | cut -d '_' -f 2 | rev | cut -c14- | rev)-generic" >> $GITHUB_ENV
-    - uses: actions/checkout@v2
+        
+    - uses: actions/checkout@v3
+    
     - name: build
       run: make -j4 ARCH=arm CROSS_COMPILE=arm-linux-gnu- KVER=$KVER
