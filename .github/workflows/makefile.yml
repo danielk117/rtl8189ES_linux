@@ -25,7 +25,4 @@ jobs:
       run: pwd; ls -lah; echo $KVER
     
     - name: build
-      run: make -j4 ARCH=arm CROSS_COMPILE=arm-linux-gnu- KVER=$KVER
-      
-    - name: after
-      run: pwd; ls -lah; echo $KVER
+      run: make -j4 KVER=$KVER
