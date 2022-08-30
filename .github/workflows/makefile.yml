@@ -21,10 +21,7 @@ jobs:
         
     - uses: actions/checkout@v3
     
-    - name: test
-      run: pwd; ls -lah; echo $KVER
-    
     - name: build
-      run: make KVER=$KVER CONFIG_PLATFORM_I386_PC=y
+      run: make -j4 ARCH=arm CROSS_COMPILE=arm-linux-gnu- KSRC=/lib/modules/$(KVER)/build
       
 
