@@ -25,6 +25,6 @@ jobs:
       run: pwd; ls -lah; echo $KVER
     
     - name: build
-      run: make ARCH=arm CROSS_COMPILE=arm-linux-gnu- KVER=$KVER
+      run: make KVER=$KVER CONFIG_PLATFORM_I386_PC=y
       
 
